@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <IonButtons>
-          <ion-back-button />
-        </IonButtons>
         <ion-title>Geolocation</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -25,9 +22,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonButtons,
   IonButton,
-  IonBackButton,
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import { Plugins } from "@capacitor/core";
@@ -41,8 +36,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonButtons,
-    IonBackButton,
     IonButton,
   },
   setup() {

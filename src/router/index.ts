@@ -1,24 +1,41 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import Home from '../views/Home.vue'
-import Geolocation from '../views/Geolocation.vue'
+import Tabs from "../views/Tabs.vue";
+
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: '/home'
+    path: "",
+    redirect: '/tabs/list'
   },
   {
-    path: '/geolocation',
-    name: 'Geolocation',
-    component: Geolocation
+    path: "/image-detail/:url",
+    component: () => import("@/views/ImageDetail.vue"),
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home
+    path: "/tabs/",
+    component: Tabs,
+    children: [
+      {
+        path: "",
+        redirect: "list",
+      },
+      {
+        path: "upload",
+        component: () => import("@/views/Home.vue"),
+      },
+      {
+        path: "list",
+        component: () => import("@/views/AllUploads.vue"),
+      },
+      {
+        path: "geolocation",
+        component: () => import("@/views/Geolocation.vue"),
+      },
+    ],
   }
-]
+];
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
