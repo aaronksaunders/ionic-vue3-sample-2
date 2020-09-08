@@ -21,6 +21,22 @@ width='40%' height='40%' style="padding:20px">
 
 ### Using Firebase For File Upload To Storage
 - updated firebase file upload composition api function to upload and list files is storage bucket
+- You need to create your own firebase configuration file, to be placed in the hooks directory
+```
+// .env.firebase.ts
+const FIREBASE_CONFIG = {
+    apiKey: "zebaayDI9wPgYFLRUd_07WB8ZVHPWowFm2w",
+    authDomain: "fffffff.firebaseapp.com",
+    databaseURL: "https://fffffff.firebaseio.com",
+    projectId: "fffffff",
+    storageBucket: "fffffff.appspot.com",
+    messagingSenderId: "87HPWowFm2w999",
+    appId: "1:00000031465:web:53a3bHPWowFm2wc6a38",
+    measurementId: "G-aSyDI9wPjgY",
+  };
+  
+  export default FIREBASE_CONFIG 
+```  
 
 ### Using Composition Pattern for Components
 
