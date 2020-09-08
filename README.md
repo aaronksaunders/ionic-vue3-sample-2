@@ -23,7 +23,7 @@ System:
    OS     : macOS Catalina
 ```
 
-### Camera Working In PWA/Website
+### Camera Working In PWA/Website/On Device
 
 - see https://capacitor.ionicframework.com/docs/pwa-elements/
 
