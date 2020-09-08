@@ -12,27 +12,45 @@ if (firebase.apps.length === 0) {
 }
 
 const STORAGE_FILE_PATH = "image-capture/";
-
+type TFilesArray = {
+  name: string;
+  url: string;
+};
+type TState = {
+  error: Error | null;
+  loading: boolean;
+  resultData: TUploadResultData | null | undefined;
+};
+type TUploadResultData = {
+  downloadUrl: string;
+  name: string;
+  image: {
+    ref: string;
+    size: number;
+    contentType: string | null | undefined;
+    timeCreated: string;
+  };
+};
 export default function() {
-  const progress = ref(0);
-  const files = ref<any>([]);
-  const state = reactive<{
-    error: any | null;
-    loading: boolean;
-    resultData: any | null;
-  }>({
+  const progress = ref<number>(0);
+  const files = ref<Array<TFilesArray> | null | undefined>();
+  const state = reactive<TState>({
     // error if one happens
     error: null,
     // if the query is loading or not
     loading: false,
     // result from upload
-    resultData: {},
+    resultData: null,
   });
 
   // get the database storage
   const storageRef = firebase.storage().ref();
 
-  const listFiles =  () => {
+  /**
+   * call this function to get the list of files
+   * is the storage bucket
+   */
+  const listFiles = () => {
     files.value = [];
     return firebase
       .storage()
@@ -42,81 +60,94 @@ export default function() {
         console.log(r);
         r.items.forEach(async (e: firebase.storage.Reference) => {
           console.log(e.fullPath);
-          const url = await e.getDownloadURL()
-          files.value.push({name : e.fullPath, url});
+          const url = await e.getDownloadURL();
+          files?.value?.push({ name: e.fullPath, url });
         });
 
         return files.value;
       });
   };
 
-  (async ()=>{
-    await listFiles()
+  /**
+   *
+   * @param fileData
+   * @param name
+   */
+  const uploadData = (
+    fileData: string,
+    name?: string
+  ): Promise<TUploadResultData | Error | undefined> => {
+    return new Promise((resolve, reject) => {
+      // initialize upload information
+      state.error = null;
+      state.loading = true;
+
+      progress.value = 0;
+      // ensure unique file names
+      const uniquePathName = new Date().getTime() + "-" + name;
+
+      try {
+        const ref = storageRef.child(`${STORAGE_FILE_PATH}\\${uniquePathName}`);
+        const uploadTask = ref.putString(fileData, "data_url", {
+          contentType: "image/jpeg",
+        });
+
+        // The first example.
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          (_progress) => {
+            const prog = _progress.bytesTransferred / _progress.totalBytes;
+            progress.value = prog;
+            console.log("STATE_CHANGED", prog);
+          },
+          (_error: Error) => {
+            state.error = _error;
+            state.loading = false;
+            console.log("ERROR", _error);
+            return reject(state.error);
+          },
+          // eslint-disable-next-line no-unused-vars
+          async () => {
+            state.error = null;
+            state.loading = false;
+
+            const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+            state.resultData = {
+              downloadUrl,
+              name: uploadTask.snapshot.metadata.name,
+              image: {
+                ref: uploadTask.snapshot.ref.fullPath,
+                size: uploadTask.snapshot.metadata.size,
+                contentType: uploadTask.snapshot.metadata.contentType,
+                timeCreated: uploadTask.snapshot.metadata.timeCreated,
+              },
+            };
+            // set progress back to zero when complete
+            progress.value = 0;
+
+            return resolve(state.resultData);
+          }
+        );
+      } catch (_error) {
+        state.loading = false;
+        state.error = _error;
+        progress.value = 0;
+        return reject(state.error);
+      }
+    });
+  };
+
+  // this call is done at startup to get the initial
+  // list of files
+  (async () => {
+    await listFiles();
   })();
 
-  const uploadData = async (fileData: string, name?: string) => {
-    // initialize upload information
-    state.error = null;
-    state.loading = true;
-
-    progress.value = 0;
-    // ensure unique file names
-    const uniquePathName = new Date().getTime() + "-" + name;
-    const ext = name?.split(".")[1].toLowerCase();
-
-    try {
-      const ref = storageRef.child(
-        `${STORAGE_FILE_PATH}\\${uniquePathName}.${ext}`
-      );
-      const uploadTask = ref.putString(fileData, "data_url", {
-        contentType: "image/jpeg",
-      });
-
-      // The first example.
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-        (_progress) => {
-          const prog = _progress.bytesTransferred / _progress.totalBytes;
-          progress.value = prog;
-          console.log("STATE_CHANGED", prog);
-        },
-        (_error) => {
-          state.error = _error;
-          state.loading = false;
-          console.log("ERROR", _error);
-        },
-        // eslint-disable-next-line no-unused-vars
-        async () => {
-          state.error = null;
-          state.loading = false;
-
-          const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
-          state.resultData = {
-            downloadUrl,
-            name: uploadTask.snapshot.metadata.name,
-            image: {
-              ref: uploadTask.snapshot.ref.fullPath,
-              size: uploadTask.snapshot.metadata.size,
-              contentType: uploadTask.snapshot.metadata.contentType,
-              timeCreated: uploadTask.snapshot.metadata.timeCreated,
-            },
-          };
-
-          // set progress back to zero when complete
-          progress.value = 0;
-        }
-      );
-    } catch (_error) {
-      state.loading = false;
-      state.error = _error;
-      progress.value = 0;
-    }
-  };
   return {
     ...toRefs(state),
     progress,
     uploadData,
     listFiles,
-    files
+    files,
   };
 }

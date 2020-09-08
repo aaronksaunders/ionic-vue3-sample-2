@@ -6,18 +6,21 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-padding">
-      <h2>All Uploads</h2>
+    <ion-content class="ion-padding">
       <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <ion-item v-for="(item, index) in files" :key="index" style="--padding-start:0px">
-        <ion-label class="ion-text-wrap">
-          <div>{{item.name.split("\\")[1] }}</div>
-          <!-- <a :href="item.url">view</a> -->
-          <ion-button @click="router.push('/image-detail/' +encodeURIComponent(item.url))">VIEW ITEM</ion-button>
-        </ion-label>
-      </ion-item>
+      <ion-list>
+        <ion-item v-for="(item, index) in files" :key="index" style="--padding-start:0px">
+          <ion-label class="ion-text-wrap">
+            <div>{{item.name.split("\\")[1] }}</div>
+            <!-- <a :href="item.url">view</a> -->
+            <ion-button
+              @click="router.push('/image-detail/' +encodeURIComponent(item.url))"
+            >VIEW ITEM</ion-button>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-content>
   </ion-page>
 </template>
@@ -33,10 +36,11 @@ import {
   IonItem,
   IonRefresher,
   IonRefresherContent,
+  IonButton,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import useFirebaseFileUpload from "../hooks/firebase-file-upload";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "AllUploads",
@@ -50,15 +54,16 @@ export default defineComponent({
     IonItem,
     IonRefresher,
     IonRefresherContent,
+    IonButton,
   },
   setup() {
     const { files, listFiles } = useFirebaseFileUpload();
-const router = useRouter();
+    const router = useRouter();
 
     const doRefresh = async (event: any) => {
       await listFiles();
       console.log("complete..");
-      event.target.complete();
+      await event.target.complete();
     };
     return { files, doRefresh, router };
   },

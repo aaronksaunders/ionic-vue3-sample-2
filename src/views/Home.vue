@@ -13,15 +13,17 @@
       </div>
       <div v-else-if="error">{{error}}</div>
 
+      <ion-toast :isOpen="true" header="TOAST" :duration="1000"></ion-toast>
       <ion-card>
         <ion-card-header>
           <h2>This is the Camera Page</h2>
         </ion-card-header>
         <ion-card-content>
           <div>Showing the use of the Capacitor Camera plugin and the vue-router for changing pages in the application</div>
-          <div class="ion-padding">
+          <div v-if="imageUrl" class="image-wrapper">
             <img :src="imageUrl ? imageUrl.dataUrl : null" />
           </div>
+
           <ion-toolbar>
             <ion-button slot="start" @click="takePicture()">Take Picture Now</ion-button>
             <ion-button slot="end" @click="uploadImage()">UPLOAD</ion-button>
@@ -43,6 +45,8 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonToast,
+  toastController,
 } from "@ionic/vue";
 
 import {
@@ -69,6 +73,7 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonButton,
+    IonToast,
   },
   setup() {
     const {
@@ -81,6 +86,24 @@ export default defineComponent({
 
     const imageUrl = ref<CameraPhoto | null>();
 
+    /**
+     *
+     */
+    const handleToast = (message: string, isError = false) => {
+      toastController
+        .create({
+          message: message,
+          position: "top",
+          color: isError ? "danger" : "primary",
+          duration: 2000,
+        })
+        .then((t) => t.present());
+    };
+
+    /**
+     * used to calculate the progress bar when
+     * uploading the file
+     */
     const progressBarStyleCalc = computed(() => {
       return {
         width: progress.value * 100 + "%",
@@ -89,17 +112,34 @@ export default defineComponent({
       };
     });
 
+    /**
+     * tries to upload the image to firebase using
+     * the composition api function uploadData
+     */
     const uploadImage = async () => {
       if (!imageUrl?.value) return;
 
-      const name = new Date().getTime() + "." + imageUrl.value.format;
-      const { dataUrl = "", path = name } = imageUrl?.value;
+      try {
+        const name = new Date().getTime() + "." + imageUrl.value.format;
+        const { dataUrl = "", path = name } = imageUrl?.value;
 
-      const r = await uploadData(dataUrl, path);
-      console.log(r);
+        const r = await uploadData(dataUrl, path);
+        console.log(r);
+
+        handleToast("File Uploaded!!", false);
+        imageUrl.value = null;
+        
+        return r;
+      } catch (error) {
+        console.log(error);
+        handleToast(error.message, true);
+      }
     };
 
-    const takePicture = async () => {
+    /**
+     * takes the picture, return CameraPhoto | Error
+     */
+    const takePicture = async (): Promise<CameraPhoto | Error> => {
       // Otherwise, make the call:
       try {
         const image = await Camera.getPhoto({
@@ -109,21 +149,24 @@ export default defineComponent({
           source: CameraSource.Prompt,
         });
 
-        console.log("image", image);
-        // image.base64_data will contain the base64 encoded result as a JPEG, with the data-uri prefix added
+        // image.base64_data will contain the base64 encoded result as
+        // a JPEG, with the data-uri prefix added
         imageUrl.value = image;
-        // can be set to the src of an image now
-        console.log(image);
+        return image;
       } catch (e) {
-        console.log("error", e);
+        handleToast("User Cancelled!", true);
+        return e;
       }
     };
+
     return {
+      // functions
       takePicture,
-      imageUrl,
       uploadImage,
-      // firebase upload hook
       uploadData,
+
+      // properties
+      imageUrl,
       loading,
       progress,
       error,
@@ -135,31 +178,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#container {
+.image-wrapper {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  height: 210px;
+  padding: 6px;
+  background: whitesmoke;
 }
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+img {
+  object-fit: contain;
+  height: 200px !important;
 }
 </style>
