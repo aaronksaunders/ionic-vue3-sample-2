@@ -28,17 +28,12 @@ System:
 - see https://capacitor.ionicframework.com/docs/pwa-elements/
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/aaronksaunders/capacitor-vue3-ionicv5-app/master/screenshots/device-2020-09-05-232653.png" 
+<img src="https://raw.githubusercontent.com/aaronksaunders/ionic-vue3-sample-2/master/screenshots/Screen%20Shot%202020-09-07%20at%209.36.30%20PM.png" 
 width='40%' height='40%' style="padding:20px">
-<img src="https://raw.githubusercontent.com/aaronksaunders/capacitor-vue3-ionicv5-app/master/screenshots/device-2020-09-05-232812.png" width='40%' height='40%' style="padding:20px">
+<img src="https://raw.githubusercontent.com/aaronksaunders/ionic-vue3-sample-2/master/screenshots/Screen%20Shot%202020-09-07%20at%209.36.56%20PM.png" width='40%' height='40%' style="padding:20px">
   </p>
   
-### Geolocation using Core Capacitor Plugins
-<p align="center">
-<img src="https://raw.githubusercontent.com/aaronksaunders/capacitor-vue3-ionicv5-app/master/screenshots/device-2020-09-05-232830.png" 
-width='40%' height='40%' style="padding:20px">
-<img src="https://raw.githubusercontent.com/aaronksaunders/capacitor-vue3-ionicv5-app/master/screenshots/device-2020-09-05-232936.png" width='40%' height='40%' style="padding:20px">
-  </p>
   
 ### Using Typescript
+### Using Firebase For File Upload To Storage
 ### Using Composition Pattern for Components
