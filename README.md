@@ -1,5 +1,5 @@
-# VueJS Ionic Capacitor Sample Application - Vue3 Ionic BETA
-> updated 9/3/2020
+# VueJS Ionic Capacitor Sample Firebase File Upload Composition API - Vue3 Ionic BETA
+> updated 9/4/2020
 ```
 Ionic:
 
@@ -32,8 +32,16 @@ System:
 width='40%' height='40%' style="padding:20px">
 <img src="https://raw.githubusercontent.com/aaronksaunders/ionic-vue3-sample-2/master/screenshots/Screen%20Shot%202020-09-07%20at%209.36.56%20PM.png" width='40%' height='40%' style="padding:20px">
   </p>
-  
+  <p align="center">
+<img src="https://raw.githubusercontent.com/aaronksaunders/ionic-vue3-sample-2/master/screenshots/Screen%20Shot%202020-09-07%20at%209.37.09%20PM.png" 
+width='40%' height='40%' style="padding:20px">
+  </p>
   
 ### Using Typescript
+- utilizing typescript in composition api functions
+- utilizing typescript for all single file components
+
 ### Using Firebase For File Upload To Storage
+- updated firebase file upload composition api function to upload and list files is storage bucket
+
 ### Using Composition Pattern for Components
