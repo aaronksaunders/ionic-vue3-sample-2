@@ -45,7 +45,7 @@ const FIREBASE_CONFIG = {
 Ionic:
 
    Ionic CLI       : 6.11.8-testing.0 (/Users/aaronksaunders/.nvm/versions/node/v13.9.0/lib/node_modules/@ionic/cli)
-   Ionic Framework : @ionic/vue 5.4.0-dev.202009032307.949031e
+   Ionic Framework : @ionic/vue 5.4.0-dev.202009081429.be01184
 
 Capacitor:
 
@@ -62,4 +62,5 @@ System:
    NodeJS : v13.9.0 (/Users/aaronksaunders/.nvm/versions/node/v13.9.0/bin/node)
    npm    : 6.13.7
    OS     : macOS Catalina
+
 ```
