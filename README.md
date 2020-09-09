@@ -1,6 +1,6 @@
 # VueJS Ionic Capacitor Sample Firebase File Upload Composition API - Vue3 Ionic BETA
 > updated 9/4/2020
-> - **Features: IonTabs, IonPage, IonToast, Capacitor Plugins Camera, GeoLocation, Firebase Storage, Page Routing, Page Parameters, **
+> - **Features: IonTabs, IonPage, IonToast, Capacitor Plugins Camera, GeoLocation, Firebase Storage, Page Routing, Page Parameters**
 
 ### Camera Working In PWA/Website/On Device
 
