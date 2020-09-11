@@ -4,8 +4,9 @@
 > updated 9/4/2020
 > - **Features: IonTabs, IonPage, IonToast, Capacitor Plugins Camera, GeoLocation, Firebase Storage, Page Routing, Page Parameters**
 > - YOUTUBE VIDEO - https://youtu.be/y2nP5OPJ6tk
-> - PART TWO, Firebase Integration - https://github.com/aaronksaunders/ionic-vue3-sample-2
-> - PART THREE, Firebase Integration - https://github.com/aaronksaunders/ionic-vue3-sample-3
+
+> - [PART TWO, Firebase Integration](https://github.com/aaronksaunders/ionic-vue3-sample-2) 
+> - [PART THREE, Firebase Integration, Authentication](https://github.com/aaronksaunders/ionic-vue3-sample-3)
 
 ### Camera Working In PWA/Website/On Device
 
