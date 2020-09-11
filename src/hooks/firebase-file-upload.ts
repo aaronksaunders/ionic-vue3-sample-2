@@ -12,10 +12,12 @@ if (firebase.apps.length === 0) {
 }
 
 const STORAGE_FILE_PATH = "image-capture/";
+
 type TFilesArray = {
   name: string;
   url: string;
 };
+
 type TState = {
   error: Error | null;
   loading: boolean;
@@ -31,6 +33,7 @@ type TUploadResultData = {
     timeCreated: string;
   };
 };
+
 export default function() {
   const progress = ref<number>(0);
   const files = ref<Array<TFilesArray> | null | undefined>();

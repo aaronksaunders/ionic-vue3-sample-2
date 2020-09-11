@@ -13,7 +13,6 @@
       </div>
       <div v-else-if="error">{{error}}</div>
 
-      <ion-toast :isOpen="true" header="TOAST" :duration="1000"></ion-toast>
       <ion-card>
         <ion-card-header>
           <h2>This is the Camera Page</h2>
@@ -45,7 +44,6 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonToast,
   toastController,
 } from "@ionic/vue";
 
@@ -73,7 +71,6 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonButton,
-    IonToast,
   },
   setup() {
     const {
