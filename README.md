@@ -1,10 +1,11 @@
 ### 📺 [IONIC VUE3 VIDEOS](https://www.youtube.com/playlist?list=PL2PY2-9rsgl2uKW0DB5FJ-YRCAG-JuSWN)
 
-# Vue 3 Ionic Capacitor Sample App Using Firebase Hook Composition API ( version 2 )
+# Vue 3 Ionic Capacitor Sample App Using Firebase Upload Hook Composition API ( version 2 )
 > updated 9/4/2020
 > - **Features: IonTabs, IonPage, IonToast, Capacitor Plugins Camera, GeoLocation, Firebase Storage, Page Routing, Page Parameters**
 > - YOUTUBE VIDEO - https://youtu.be/y2nP5OPJ6tk
 
+> - [PART ONE, Capacitor Camera & Geolocations](https://github.com/aaronksaunders/capacitor-vue3-ionicv5-app)
 > - [PART TWO, Firebase Integration](https://github.com/aaronksaunders/ionic-vue3-sample-2) 
 > - [PART THREE, Firebase Integration, Authentication](https://github.com/aaronksaunders/ionic-vue3-sample-3)
 
