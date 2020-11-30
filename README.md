@@ -1,4 +1,5 @@
 ### 📺 [IONIC VUE3 VIDEOS](https://www.youtube.com/playlist?list=PL2PY2-9rsgl2uKW0DB5FJ-YRCAG-JuSWN)
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W31U7HM)
 
 # Vue 3 Ionic Capacitor Sample App Using Firebase Upload Hook Composition API ( version 2 )
 > updated 9/4/2020
